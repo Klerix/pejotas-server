@@ -1,1 +1,1 @@
-# pejotas-server
+# pejotas

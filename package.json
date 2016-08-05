@@ -1,0 +1,27 @@
+{
+  "name": "pejotas",
+  "version": "4.0.0",
+  "description": "Pejotas API",
+  "main": "app.js",
+  "dependencies": {
+    "fs": "0.0.2",
+    "mysql": "^2.11.1",
+    "restify": "^4.1.1",
+    "showdown": "^1.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaguilar-nice/pejotas.git"
+  },
+  "author": "Jordi Aguilar <klerix.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaguilar-nice/pejotas/issues"
+  },
+  "homepage": "https://github.com/jaguilar-nice/pejotas#readme"
+}
