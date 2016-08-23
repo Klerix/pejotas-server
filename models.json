@@ -1,36 +1,36 @@
 {
-    "skill": {
-        "table": "skills",
-        "orderBy": "category, name",
-        "belongsTo": ["skill"],
-        "hasAndBelongsTo": [{ "name": "class", "fields": "junction.cost as extracost" }],
-        "md2html": ["description"]
+  "skill": {
+    "table": "skills",
+    "orderBy": "category, name",
+    "belongsTo": ["skill"],
+    "hasAndBelongsTo": [{ "name": "class", "fields": "junction.extracost as extracost" }],
+    "md2html": ["description"]
 
-    },
+  },
 
-    "event": {
-        "table": "events",
-        "hasAndBelongsTo": ["archetype", "class"]
-    },
+  "event": {
+    "table": "events",
+    "hasAndBelongsTo": ["archetype", "class"]
+  },
 
-    "class": {
-        "table": "classes",
-        "orderBy": "type, name",
-        "hasAndBelongsTo": ["event", { "name": "skill", "fields": "junction.cost + origin.cost as totalcost" }],
-        "md2html": ["description"]
-    },
+  "class": {
+    "table": "classes",
+    "orderBy": "type, name",
+    "hasAndBelongsTo": ["event", { "name": "skill", "fields": "junction.extracost + origin.cost as totalcost" }],
+    "md2html": ["description"]
+  },
 
-    "archetype": {
-        "table": "archetypes",
-        "orderBy": "name",
-        "hasAndBelongsTo": ["event", "trait"],
-        "md2html": ["description"]
-    },
+  "archetype": {
+    "table": "archetypes",
+    "orderBy": "name",
+    "hasAndBelongsTo": ["event", "trait"],
+    "md2html": ["description"]
+  },
 
-    "trait": {
-        "table": "traits",
-        "hasAndBelongsTo": ["archetype"],
-        "orderBy": "name",
-        "md2html": ["description"]
-    }
+  "trait": {
+    "table": "traits",
+    "hasAndBelongsTo": ["archetype"],
+    "orderBy": "name",
+    "md2html": ["description"]
+  }
 }
