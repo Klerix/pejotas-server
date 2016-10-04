@@ -3,7 +3,7 @@
     "table": "skills",
     "orderBy": "category, name",
     "belongsTo": ["skill"],
-    "hasAndBelongsTo": [{ "name": "class", "fields": "junction.extracost as extracost" }],
+    "hasAndBelongsTo": [{ "name": "class", "fields": "junction.extracost as extracost", "orderBy": "type, name" }],
     "md2html": ["description"]
 
   },
