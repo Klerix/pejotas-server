@@ -1,18 +1,18 @@
-var package = require('../package.json');
-var restify = require('restify');
+var pkg = require('../package.json')
+var restify = require('restify')
 
 // init server
 var server = restify.createServer({
-    name: package.name,
-    version: package.version
-});
+  name: pkg.name,
+  version: pkg.version
+})
 
 // "use" directives
-server.use(restify.queryParser());
-server.use(restify.gzipResponse());
-server.use(restify.CORS());
+server.use(restify.queryParser())
+server.use(restify.gzipResponse())
+server.use(restify.CORS())
 
 // "pre" directives
-server.pre(restify.pre.sanitizePath());
+server.pre(restify.pre.sanitizePath())
 
-module.exports = server;
+module.exports = server

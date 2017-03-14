@@ -1,10 +1,9 @@
-var db = require('./servers/database');
-var server = require('./servers/restify');
+var server = require('./server')
 
-// transform models to routes
-db.models2routes(server, require('./models.json'));
+// router
+require('./router')(server)
 
 // Start listening
-server.listen(8080, function() {
-    console.log('%s listening at %s', server.name, server.url);
-});
+server.listen(8080, () => {
+  console.log(`${server.name} listening at ${server.url}`)
+})
