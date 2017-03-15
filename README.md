@@ -1,10 +1,7 @@
 # pejotas server
 API of pejotas
 
-
-### Requirements & Install
-- Requires `sqlite3`
-
+### Install
 To install run:
 ```
 yarn
