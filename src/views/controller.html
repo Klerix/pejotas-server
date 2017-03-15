@@ -1,103 +1,35 @@
-<h4>Servicios /
-  <%=controller.endpoint%>
+<h4>Enpoints de /
+  <%= controller.endpoint %>
 </h4>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/archetypes">/<%=controller.endpoint%>/archetypes</a>
-    </div>
-    <div class="col-9">
-      Devuelve colecci&oacute;n de archetypes.
-    </div>
-  </div>
+    <% _.forEach(values, (value) => { %>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-block">
+            <h6 class="card-title">
+              <%= value.label %>
+            </h6>
+            <div class="card-text">
+              <strong>Collection:</strong>
+              <a href="/<%= controller.endpoint %>/<%= value.model %>">/<%= controller.endpoint %>/<%= value.model %></a>
+            </div>
+            <div class="card-text">
+              <strong>Model:</strong>
+              <a href="/<%= controller.endpoint %>/<%= value.model %>/1">/<%= controller.endpoint %>/<%= value.model %>/:id</a>
+            </div>
+            <% _.forEach(value.relations, (rel) => { %>
+              <div class="card-text">
+                <strong>Relation (<%= rel %>):</strong>
+                <a href="/<%= controller.endpoint %>/<%= value.model %>/1/<%= rel %>">/<%= controller.endpoint %>/<%= value.model %>/:id/<%= rel %></a>
+              </div>
+              <% }) %>
 
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/archetypes/1">/<%=controller.endpoint%>/archetypes/:id</a>
-    </div>
-    <div class="col-9">
-      Detalle de archetype y sus relaciones referenciada por :id.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/classes">/<%=controller.endpoint%>/classes</a>
-    </div>
-    <div class="col-9">
-      Devuelve colecci&oacute;n de classes.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/classes/1">/<%=controller.endpoint%>/classes/:id</a>
-    </div>
-    <div class="col-9">
-      Detalle de class y sus relaciones referenciada por :id.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/events">/<%=controller.endpoint%>/events</a>
-    </div>
-    <div class="col-9">
-      Devuelve colecci&oacute;n de events.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/events/1">/<%=controller.endpoint%>/events/:id</a>
-    </div>
-    <div class="col-9">
-      Detalle de event y sus relaciones referenciada por :id.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/skills">/<%=controller.endpoint%>/skills</a>
-    </div>
-    <div class="col-9">
-      Devuelve colecci&oacute;n de skills.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/skills/1">/<%=controller.endpoint%>/skills/:id</a>
-    </div>
-    <div class="col-9">
-      Detalle de la skill y sus relaciones referenciada por :id.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/traits">/<%=controller.endpoint%>/traits</a>
-    </div>
-    <div class="col-9">
-      Devuelve colecci&oacute;n de traits.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/traits/1">/<%=controller.endpoint%>/traits/:id</a>
-    </div>
-    <div class="col-9">
-      Detalle de la trait y sus relaciones referenciada por :id.
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-3">
-      <a href="/<%=controller.endpoint%>/words">/<%=controller.endpoint%>/words</a>
-    </div>
-    <div class="col-9">
-      Devuelve colecci&oacute;n de special words.
-    </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
   </div>
 </div>
+
+<p><a href="/">Volver a la lista de servicios</a></p>
