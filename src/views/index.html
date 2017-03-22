@@ -1,8 +1,10 @@
 <h4>Sistemas disponibles</h4>
 <div class="container-fluid">
   <% _.forEach(router, (controller) => { %>
-    <button type="button" class="btn btn-primary" style="cursor: pointer" onclick="location.href='/<%=controller.endpoint%>'">
-      <%= controller.endpoint %>
-    </button>
+    <a href="<%=global.baseurl%><%=controller.endpoint%>">
+      <button type="button" class="btn btn-primary" style="cursor: pointer">
+        <%= controller.endpoint %>
+      </button>
+    </a>
     <% }) %>
 </div>

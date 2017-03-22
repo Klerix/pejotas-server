@@ -12,16 +12,16 @@
             </h6>
             <div class="card-text">
               <strong>Collection:</strong>
-              <a href="/<%= controller.endpoint %>/<%= value.model %>">/<%= controller.endpoint %>/<%= value.model %></a>
+              <a href="<%=global.baseurl%><%=controller.endpoint%>/<%= value.model %>">/<%= controller.endpoint %>/<%= value.model %></a>
             </div>
             <div class="card-text">
               <strong>Model:</strong>
-              <a href="/<%= controller.endpoint %>/<%= value.model %>/1">/<%= controller.endpoint %>/<%= value.model %>/:id</a>
+              <a href="<%=global.baseurl%><%=controller.endpoint%>/<%= value.model %>/1">/<%= controller.endpoint %>/<%= value.model %>/:id</a>
             </div>
             <% _.forEach(value.relations, (rel) => { %>
               <div class="card-text">
                 <strong>Relation (<%= rel %>):</strong>
-                <a href="/<%= controller.endpoint %>/<%= value.model %>/1/<%= rel %>">/<%= controller.endpoint %>/<%= value.model %>/:id/<%= rel %></a>
+                <a href="<%=global.baseurl%><%=controller.endpoint%>/<%= value.model %>/1/<%= rel %>">/<%= controller.endpoint %>/<%= value.model %>/:id/<%= rel %></a>
               </div>
               <% }) %>
 
