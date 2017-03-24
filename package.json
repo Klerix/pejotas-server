@@ -1,6 +1,6 @@
 {
   "name": "pejotas",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Pejotas API",
   "main": "src/app.js",
   "scripts": {
