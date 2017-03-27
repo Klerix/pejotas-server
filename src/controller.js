@@ -3,14 +3,14 @@ let _ = require('lodash')
 let error = require('./error')
 
 class Controller {
-  constructor (endpoint, server, db) {
+  constructor(endpoint, server, db) {
     this.db = db
     this.endpoint = endpoint
 
     this.enroute(endpoint, server)
   }
 
-  enroute (endpoint, server) {
+  enroute(endpoint, server) {
     server.get(`/${endpoint}`, this.index.bind(this))
 
     server.get(`/${endpoint}/archetypes`, this.listArchtypes.bind(this))
@@ -40,7 +40,7 @@ class Controller {
     server.get(`/${endpoint}/words/:id`, this.viewWords.bind(this))
   }
 
-  index (req, res, next) {
+  index(req, res, next) {
     let body = view({ controller: this })
     res.writeHead(200, {
       'Content-Type': 'text/html'
@@ -50,7 +50,7 @@ class Controller {
     return next()
   }
 
-  show (origin, req, res, next, options) {
+  show(origin, req, res, next, options) {
     options = options || {}
 
     let sql = 'SELECT * FROM ' + origin
@@ -70,12 +70,12 @@ class Controller {
     }
   }
 
-  rel (ternary, dest, origKey, destKey, req, res, next, options) {
+  rel(ternary, dest, origKey, destKey, req, res, next, options) {
     options = _.assign({ fields: 'dest.*', orderby: 'dest.name' }, options)
 
     let sql = 'SELECT ' + options.fields + ' FROM ' + ternary + ' tern ' +
-            'LEFT JOIN ' + dest + ' dest ON (dest.id = tern.' + destKey + ') ' +
-            'WHERE ' + origKey + '=? '
+      'LEFT JOIN ' + dest + ' dest ON (dest.id = tern.' + destKey + ') ' +
+      'WHERE ' + origKey + '=? '
 
     if (options.orderby) sql += 'ORDER BY ' + options.orderby
 
@@ -86,88 +86,100 @@ class Controller {
     })
   }
 
-  listArchtypes (req, res, next) {
+  listArchtypes(req, res, next) {
     this.show('archetypes', req, res, next, { orderby: 'name' })
   }
 
-  viewArchtype (req, res, next) {
+  viewArchtype(req, res, next) {
     this.show('archetypes', req, res, next, { where: 'id = ?' })
   }
 
-  relArchtypesTraits (req, res, next) {
-    this.rel('archetypes_traits', 'traits', 'archetype_id', 'trait_id', req, res, next)
+  relArchtypesTraits(req, res, next) {
+    this.rel('archetypes_traits', 'traits', 'archetype_id', 'trait_id', req, res, next, {
+      orderby: 'name'
+    })
   }
 
-  relArchtypesEvents (req, res, next) {
-    this.rel('archetypes_events', 'events', 'archetype_id', 'event_id', req, res, next)
+  relArchtypesEvents(req, res, next) {
+    this.rel('archetypes_events', 'events', 'archetype_id', 'event_id', req, res, next, {
+      orderby: 'name'
+    })
   }
 
-  listClasses (req, res, next) {
+  listClasses(req, res, next) {
     this.show('classes', req, res, next, { orderby: 'type, name' })
   }
 
-  viewClass (req, res, next) {
+  viewClass(req, res, next) {
     this.show('classes', req, res, next, { where: 'id = ?' })
   }
 
-  relClassesEvents (req, res, next) {
-    this.rel('classes_events', 'events', 'class_id', 'event_id', req, res, next)
+  relClassesEvents(req, res, next) {
+    this.rel('classes_events', 'events', 'class_id', 'event_id', req, res, next, {
+      orderby: 'name'
+    })
   }
 
-  relClassesSkills (req, res, next) {
+  relClassesSkills(req, res, next) {
     this.rel('classes_skills', 'skills', 'class_id', 'skill_id', req, res, next, {
       orderby: 'dest.category, dest.name',
       fields: 'dest.*, tern.extracost + dest.cost as totalcost'
     })
   }
 
-  listEvents (req, res, next) {
+  listEvents(req, res, next) {
     this.show('events', req, res, next, { orderby: 'name' })
   }
 
-  viewEvent (req, res, next) {
+  viewEvent(req, res, next) {
     this.show('events', req, res, next, { where: 'id = ?' })
   }
 
-  relEventsArchetypes (req, res, next) {
-    this.rel('archetypes_events', 'archetypes', 'event_id', 'archetype_id', req, res, next)
+  relEventsArchetypes(req, res, next) {
+    this.rel('archetypes_events', 'archetypes', 'event_id', 'archetype_id', req, res, next, {
+      orderby: 'name'
+    })
   }
 
-  relEventsClasses (req, res, next) {
-    this.rel('classes_events', 'classes', 'event_id', 'class_id', req, res, next)
+  relEventsClasses(req, res, next) {
+    this.rel('classes_events', 'classes', 'event_id', 'class_id', req, res, next, {
+      orderby: 'type, name'
+    })
   }
 
-  listSkills (req, res, next) {
+  listSkills(req, res, next) {
     this.show('skills', req, res, next, { orderby: 'category, name' })
   }
 
-  viewSkill (req, res, next) {
+  viewSkill(req, res, next) {
     this.show('skills', req, res, next, { where: 'id = ?' })
   }
 
-  relSkillsClasses (req, res, next) {
+  relSkillsClasses(req, res, next) {
     this.rel('classes_skills', 'classes', 'skill_id', 'class_id', req, res, next, {
       orderby: 'dest.type, dest.name'
     })
   }
 
-  listTraits (req, res, next) {
+  listTraits(req, res, next) {
     this.show('traits', req, res, next, { orderby: 'name' })
   }
 
-  viewTrait (req, res, next) {
+  viewTrait(req, res, next) {
     this.show('traits', req, res, next, { where: 'id = ?' })
   }
 
-  listWords (req, res, next) {
+  listWords(req, res, next) {
     this.show('words', req, res, next, { orderby: 'name' })
   }
 
-  relTraitsArchetypes (req, res, next) {
-    this.rel('archetypes_traits', 'archetypes', 'trait_id', 'archetype_id', req, res, next)
+  relTraitsArchetypes(req, res, next) {
+    this.rel('archetypes_traits', 'archetypes', 'trait_id', 'archetype_id', req, res, next, {
+      orderby: 'name'
+    })
   }
 
-  viewWords (req, res, next) {
+  viewWords(req, res, next) {
     this.show('words', req, res, next, { where: 'id = ?' })
   }
 }

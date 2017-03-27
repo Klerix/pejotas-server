@@ -12,5 +12,8 @@
     "standard",
     "node"
   ],
+  "rules": {
+    "space-before-function-paren": "off"
+  },
   "globals": {}
 }
