@@ -21,7 +21,7 @@ module.exports = (options) => {
     {
       label: 'Eventos',
       model: 'events',
-      relations: ['archetypes', 'skills']
+      relations: ['archetypes', 'classes']
     },
     {
       label: 'Habilidades',
