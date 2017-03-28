@@ -9,19 +9,14 @@ module.exports = (options) => {
 
   options.values = [
     {
-      label: 'Arquetipo',
-      model: 'archetypes',
-      relations: ['events', 'traits']
-    },
-    {
       label: 'Clase',
       model: 'classes',
-      relations: ['events', 'skills']
+      relations: ['events', 'skills', 'traits']
     },
     {
       label: 'Eventos',
       model: 'events',
-      relations: ['archetypes', 'classes']
+      relations: ['classes']
     },
     {
       label: 'Habilidades',
@@ -31,7 +26,7 @@ module.exports = (options) => {
     {
       label: 'Rasgos',
       model: 'traits',
-      relations: ['archetypes']
+      relations: ['classes']
     },
     {
       label: 'Palabras Especiales',

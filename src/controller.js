@@ -13,19 +13,14 @@ class Controller {
   enroute(endpoint, server) {
     server.get(`/${endpoint}`, this.index.bind(this))
 
-    server.get(`/${endpoint}/archetypes`, this.listArchtypes.bind(this))
-    server.get(`/${endpoint}/archetypes/:id`, this.viewArchtype.bind(this))
-    server.get(`/${endpoint}/archetypes/:id/events`, this.relArchtypesEvents.bind(this))
-    server.get(`/${endpoint}/archetypes/:id/traits`, this.relArchtypesTraits.bind(this))
-
     server.get(`/${endpoint}/classes`, this.listClasses.bind(this))
     server.get(`/${endpoint}/classes/:id`, this.viewClass.bind(this))
     server.get(`/${endpoint}/classes/:id/events`, this.relClassesEvents.bind(this))
     server.get(`/${endpoint}/classes/:id/skills`, this.relClassesSkills.bind(this))
+    server.get(`/${endpoint}/classes/:id/traits`, this.relClassesTraits.bind(this))
 
     server.get(`/${endpoint}/events`, this.listEvents.bind(this))
     server.get(`/${endpoint}/events/:id`, this.viewEvent.bind(this))
-    server.get(`/${endpoint}/events/:id/archetypes`, this.relEventsArchetypes.bind(this))
     server.get(`/${endpoint}/events/:id/classes`, this.relEventsClasses.bind(this))
 
     server.get(`/${endpoint}/skills`, this.listSkills.bind(this))
@@ -34,7 +29,7 @@ class Controller {
 
     server.get(`/${endpoint}/traits`, this.listTraits.bind(this))
     server.get(`/${endpoint}/traits/:id`, this.viewTrait.bind(this))
-    server.get(`/${endpoint}/traits/:id/archetypes`, this.relTraitsArchetypes.bind(this))
+    server.get(`/${endpoint}/traits/:id/classes`, this.relTraitsClasses.bind(this))
 
     server.get(`/${endpoint}/words`, this.listWords.bind(this))
     server.get(`/${endpoint}/words/:id`, this.viewWords.bind(this))
@@ -86,26 +81,6 @@ class Controller {
     })
   }
 
-  listArchtypes(req, res, next) {
-    this.show('archetypes', req, res, next, { orderby: 'name' })
-  }
-
-  viewArchtype(req, res, next) {
-    this.show('archetypes', req, res, next, { where: 'id = ?' })
-  }
-
-  relArchtypesTraits(req, res, next) {
-    this.rel('archetypes_traits', 'traits', 'archetype_id', 'trait_id', req, res, next, {
-      orderby: 'name'
-    })
-  }
-
-  relArchtypesEvents(req, res, next) {
-    this.rel('archetypes_events', 'events', 'archetype_id', 'event_id', req, res, next, {
-      orderby: 'name'
-    })
-  }
-
   listClasses(req, res, next) {
     this.show('classes', req, res, next, { orderby: 'type, name' })
   }
@@ -127,18 +102,18 @@ class Controller {
     })
   }
 
+  relClassesTraits(req, res, next) {
+    this.rel('classes_traits', 'traits', 'class_id', 'trait_id', req, res, next, {
+      orderby: 'dest.category, dest.name'
+    })
+  }
+
   listEvents(req, res, next) {
     this.show('events', req, res, next, { orderby: 'name' })
   }
 
   viewEvent(req, res, next) {
     this.show('events', req, res, next, { where: 'id = ?' })
-  }
-
-  relEventsArchetypes(req, res, next) {
-    this.rel('archetypes_events', 'archetypes', 'event_id', 'archetype_id', req, res, next, {
-      orderby: 'name'
-    })
   }
 
   relEventsClasses(req, res, next) {
@@ -169,14 +144,14 @@ class Controller {
     this.show('traits', req, res, next, { where: 'id = ?' })
   }
 
-  listWords(req, res, next) {
-    this.show('words', req, res, next, { orderby: 'name' })
+  relTraitsClasses(req, res, next) {
+    this.rel('classes_traits', 'classes', 'trait_id', 'class_id', req, res, next, {
+      orderby: 'dest.type, dest.name'
+    })
   }
 
-  relTraitsArchetypes(req, res, next) {
-    this.rel('archetypes_traits', 'archetypes', 'trait_id', 'archetype_id', req, res, next, {
-      orderby: 'name'
-    })
+  listWords(req, res, next) {
+    this.show('words', req, res, next, { orderby: 'name' })
   }
 
   viewWords(req, res, next) {
