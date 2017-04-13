@@ -46,9 +46,10 @@ class Controller {
   }
 
   show(origin, req, res, next, options) {
-    options = options || {}
+    options = _.assign({ fields: 'origin.*' }, options)
 
-    let sql = 'SELECT * FROM ' + origin
+    let sql = 'SELECT ' + options.fields + ' FROM ' + origin + ' origin'
+    if (options.leftJoin) sql += ' LEFT JOIN ' + options.leftJoin
     if (options.orderby) sql += ' ORDER BY ' + options.orderby
 
     let callback = (err, rows) => {
@@ -63,16 +64,23 @@ class Controller {
     } else {
       this.db.all(sql, callback)
     }
+
+    if (global.dev) console.log(sql)
   }
 
   rel(ternary, dest, origKey, destKey, req, res, next, options) {
     options = _.assign({ fields: 'dest.*', orderby: 'dest.name' }, options)
 
     let sql = 'SELECT ' + options.fields + ' FROM ' + ternary + ' tern ' +
-      'LEFT JOIN ' + dest + ' dest ON (dest.id = tern.' + destKey + ') ' +
-      'WHERE ' + origKey + '=? '
+      'LEFT JOIN ' + dest + ' dest ON (dest.id = tern.' + destKey + ')'
+
+    if (options.leftJoin) sql += ' LEFT JOIN ' + options.leftJoin
+
+    sql += ' WHERE ' + origKey + '=? '
 
     if (options.orderby) sql += 'ORDER BY ' + options.orderby
+
+    if (global.dev) console.log(sql)
 
     this.db.all(sql, [req.params.id], (err, rows) => {
       if (err) return error(err, res)
@@ -98,7 +106,8 @@ class Controller {
   relClassesSkills(req, res, next) {
     this.rel('classes_skills', 'skills', 'class_id', 'skill_id', req, res, next, {
       orderby: 'dest.category, dest.name',
-      fields: 'dest.*, tern.extracost + dest.cost as totalcost'
+      leftJoin: 'skills s2 ON (dest.skill_id = s2.id)',
+      fields: 'dest.*, tern.extracost + dest.cost as totalcost, s2.name as parentName'
     })
   }
 
@@ -123,11 +132,19 @@ class Controller {
   }
 
   listSkills(req, res, next) {
-    this.show('skills', req, res, next, { orderby: 'category, name' })
+    this.show('skills', req, res, next, {
+      orderby: 'category, name',
+      leftJoin: 'skills s2 ON (origin.skill_id = s2.id)',
+      fields: 'origin.*, s2.name as parentName'
+    })
   }
 
   viewSkill(req, res, next) {
-    this.show('skills', req, res, next, { where: 'id = ?' })
+    this.show('skills', req, res, next, {
+      where: 'id = ?',
+      leftJoin: 'skills s2 ON (origin.skill_id = s2.id)',
+      fields: 'origin.*, s2.name as parentName'
+    })
   }
 
   relSkillsClasses(req, res, next) {
