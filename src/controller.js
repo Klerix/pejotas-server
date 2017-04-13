@@ -141,7 +141,7 @@ class Controller {
 
   viewSkill(req, res, next) {
     this.show('skills', req, res, next, {
-      where: 'id = ?',
+      where: 'origin.id = ?',
       leftJoin: 'skills s2 ON (origin.skill_id = s2.id)',
       fields: 'origin.*, s2.name as parentName'
     })
