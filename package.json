@@ -7,11 +7,12 @@
     "start": "node src/index.js"
   },
   "dependencies": {
+    "dotenv": "^6.1.0",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.4",
-    "restify": "^4.1.1",
+    "restify": "^4.3.4",
     "showdown": "^1.4.2",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^4.0.2"
   },
   "repository": {
     "type": "git",
